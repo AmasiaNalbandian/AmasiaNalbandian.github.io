@@ -1,0 +1,31 @@
+body {
+	margin: 0;
+}
+html,
+body {
+	height: 500px;
+	background-color: darkblue;
+	margin: auto;
+	
+	
+}
+
+#leaflet {
+	border: red 3px solid;
+	align-self: center;
+	background-color: #262626;
+}
+
+#organization {
+	color: #431c53;
+	/* color: #4f3a52; */
+}
+
+#title {
+	color: #5E93D1;
+}
+
+#subtitle {
+	color: #262626;
+	font-weight: bold;
+}
