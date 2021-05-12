@@ -1,23 +1,19 @@
 body {
 	margin: 0;
-}
-html,
-body {
-	height: 500px;
-	background-color: darkblue;
-	margin: auto;
-	
-	
+	margin: 0 20%;
 }
 
+
+/* Use following for the map. */
+
 #leaflet {
-	border: red 3px solid;
+	border: black 3px solid;
 	align-self: center;
 	background-color: #262626;
 }
 
 #organization {
-	color: #431c53;
+	color: #1a8061;
 	/* color: #4f3a52; */
 }
 
@@ -28,4 +24,31 @@ body {
 #subtitle {
 	color: #262626;
 	font-weight: bold;
+}
+
+#info {
+	margin-top: 3px;
+}
+
+#legend {
+	background-color: #262626;
+}
+
+#maptitle {
+	width: 220px;
+	font-family: 'Times New Roman', Times, serif;
+	color: #61A0D7;
+	margin-top: 75px;
+	margin-left: 15px;
+	font-size: 32px;
+}
+
+#maptext {
+	max-width: 240px;
+	font-family: 'Times New Roman', Times, serif;
+	color: #61A0D7;
+	margin-left: 15px;
+	/* position: absolute; */
+	margin-bottom:100px;
+	font-size: 16px;
 }
