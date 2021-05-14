@@ -2,9 +2,25 @@ var map;
 var lite;
 var collection = [];
 
+document.getElementById("overlayText").style.display = "none";
+
+// window.addEventListener('resize', mapResize);
+var width = document.documentElement.clientWidth;
+
+window.onload = async () => {
+	
+	let done = await f;
+
+	//put all info to load here:
+	if(done) {
+		console.log("The document is done.")
+		document.getElementById("overlayText").style.display = "block";
+	}
+}
+
 
 // connects to API to fetch data.
-fetch('https://migrationtechtracker-api.herokuapp.com/api/countries').then((data) => {
+const f = fetch('https://migrationtechtracker-api.herokuapp.com/api/countries').then((data) => {
 	collection = data.json();
 	return collection;
 }).then((data) => {
@@ -16,9 +32,9 @@ fetch('https://migrationtechtracker-api.herokuapp.com/api/countries').then((data
 			})
 		],
 		zoomControl: false,
-		center: [30, -10],
-		zoom: 1.5,
-		minZoom: 1.25,
+		center: [30, 20],
+		zoom: ((width/100) * 0.10), 	// calculate zoom based on user's page
+		// minZoom: 1.25,
 		// maxBounds: [
 		// 	//sw
 		// 	[60.712, 94.227],
@@ -29,7 +45,7 @@ fetch('https://migrationtechtracker-api.herokuapp.com/api/countries').then((data
 
 
 	// attributes of map.
-	// map.dragging.disable();
+	map.dragging.disable();
 	map.touchZoom.disable();
 	map.doubleClickZoom.disable();
 	// map.scrollWheelZoom.disable();
@@ -81,43 +97,33 @@ fetch('https://migrationtechtracker-api.herokuapp.com/api/countries').then((data
 			})
 
 		})
-		L.marker([country.latitude, country.longitude], { icon: lite }).addTo(map).bindPopup(popupText);
+		var popup = L.marker([country.latitude, country.longitude], { icon: lite }).addTo(map).bindPopup(popupText);
+		popup.addEventListener('popupclose', resetCenter);
 
-
-		map.on('click', () => {
-			console.log("clicked");
-			document.getElementById("maptitle").style.display = "none";
+		// closes pop ups on mouse-out
+		map.on({
+			mouseout: function() {
+				popup.closePopup();
+			}
 		})
 	})
-
+	return true;
 })
 
+function resetCenter() {
+	console.log("pop up was closed.");
+	map.panTo([30, -10]);
+}
 
+function mapFocus(){
+	document.getElementById("overlayText").style.display = "none";
+}
 
+function resetMap(){
+	document.getElementById("overlayText").style.display = "block";	
+}
 
-
-
-//green icon
-// var greenMarkerGoodTooltips = L.marker([51.475, -0.075], { icon: greenIcon }).addTo(map);
-// greenMarkerGoodTooltips.bindTooltip("left", { direction: "left" }).openTooltip();
-// greenMarkerGoodTooltips.bindTooltip("right", { direction: "right" }).openTooltip();
-// greenMarkerGoodTooltips.bindTooltip("top", { direction: "top" }).openTooltip();
-// greenMarkerGoodTooltips.bindTooltip("bottom", { direction: "bottom" }).openTooltip();
-
-
-
-//this is a marker
-
-
-
-	// L.marker([-40.9006, 174.8860]).addTo(map).bindPopup("I am a popup.").openPopup();
-
-
-
-
-//aonther marker
-// var marker = new L.marker([39.5, -77.3], { opacity: 0.01 }); //opacity may be set to zero
-// marker.bindTooltip("<b>My HTML is here!!!!</b>", { permanent: true, className: "my-label", offset: [0, 0] });
-// marker.addTo(map);
-
-
+function mapResize() {
+	// set the zoom level to 10
+	// map.setZoom((1/width ));  
+}

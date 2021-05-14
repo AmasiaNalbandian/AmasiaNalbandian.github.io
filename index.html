@@ -13,19 +13,18 @@
   <h1> Ryerson</h1>
   <hr />
 
-  <p>This is lucia's work:</p>
+  <p>This is lucia's work</p>
 
   <script>
       //script to print out one letter at a time.
   </script>
   <h1>Hello</h1>
-  <div id="leaflet" style="width: 100%; height: 600px;">
-    <div class="leaflet-control leaflet-top leaflet-left col-sm-2 col-sm-offset-1">
-      <h2 id="maptitle">Managing
-        Migration:
-        Tech Tracker</h2>
-    </div>
-    <div class="leaflet-control leaflet-bottom leaflet-left col-sm-2 col-sm-offset-1">
+  <div id="leaflet" onmouseover="mapFocus()" onmouseout="resetMap()" style="width: 100%; height: 65vh;">
+    <div id="overlayText" class="leaflet-control leaflet-bottom leaflet-left col-sm-2 col-sm-offset-1">
+      <h2 id="maptitle">
+        Migration Tech Tracker</h2>
+        <hr id="titleLine" size="4" width="90%" color="#89b7df">
+    
       <p id="maptext">Innovative technologies have
         given rise to new ways to
         manage migration. These
