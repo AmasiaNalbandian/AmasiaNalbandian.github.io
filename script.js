@@ -38,7 +38,7 @@ const f = fetch('https://migrationtechtracker-api.herokuapp.com/api/countries').
 	map.dragging.disable();
 	map.touchZoom.disable();
 	map.doubleClickZoom.disable();
-	// map.scrollWheelZoom.disable();
+	map.scrollWheelZoom.disable();
 	// map.boxZoom.disable();
 	map.keyboard.disable();
 	if (map.tap) map.tap.disable();
