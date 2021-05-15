@@ -1,27 +1,54 @@
-// load back ass backdrop
-var map = new L.Map('leaflet', {
-	layers: [
-		new L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
-			'attribution': 'Map data © <a href="http://openstreetmap.org">OpenStreetMap</a> contributors'
-		})
-	],
-	center: [40, 20],
-	zoom: 1.5
-});
-
-var lite = L.icon({
-	iconUrl: '../lite.png',
-	iconSize: [20, 20], // size of the icon
-	tooltipAnchor: [0, 0] // points the the tip of the leaf
-});
-
+var map;
+var lite;
 var collection = [];
+
+document.getElementById("overlayText").style.display = "none";
+var width = document.documentElement.clientWidth;
+
+window.onload = async () => {
+	var done = await f;
+
+	// Once all data is retrieved
+	if (done) {
+		document.getElementById("overlayText").style.display = "block";
+		document.getElementById('loader').style.display = "none";
+	}
+}
+
+
 // connects to API to fetch data.
-fetch('https://migrationtechtracker-api.herokuapp.com/api/countries').then((data) => {
+const f = fetch('https://migrationtechtracker-api.herokuapp.com/api/countries').then((data) => {
 	collection = data.json();
 	return collection;
 }).then((data) => {
-	collection = data;
+	// load back as backdrop
+	map = new L.Map('leaflet', {
+		layers: [
+			new L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
+				'attribution': 'Map data © <a href="http://openstreetmap.org">OpenStreetMap</a> contributors'
+			})
+		],
+		zoomControl: false,
+		center: [30, 20],
+		zoom: ((width/100) * 0.10), 	// calculate zoom based on user's page width
+	});
+
+
+	// attributes of map.
+	map.dragging.disable();
+	map.touchZoom.disable();
+	map.doubleClickZoom.disable();
+	// map.scrollWheelZoom.disable();
+	// map.boxZoom.disable();
+	map.keyboard.disable();
+	if (map.tap) map.tap.disable();
+
+	lite = L.icon({
+		iconUrl: 'public/lite.png',
+		iconSize: [30, 30], // size of the icon
+		tooltipAnchor: [0, 0] // points the the tip of the leaf
+	});
+
 	// for each country
 	data.forEach((country) => {
 
@@ -38,9 +65,9 @@ fetch('https://migrationtechtracker-api.herokuapp.com/api/countries').then((data
 			<div id="title"><b>${usecase.title}</b> </div>`;
 			}
 			popupText += `
-			<div id="subtitle">Department</div> ${usecase.department}<br/>
-			<div id="subtitle">Details</div> ${usecase.details}<br/>
-			<div id="subtitle">Sources</div>`
+			<div id="info"><div id="subtitle">Department</div> ${usecase.department}</div>
+			<div id="info"><div id="subtitle">Details</div> ${usecase.details}<br/></div>
+			<div id="info"><div id="subtitle">Sources</div></div>`
 
 			usecase.source.forEach((source) => {
 				if (source.link) {
@@ -52,45 +79,59 @@ fetch('https://migrationtechtracker-api.herokuapp.com/api/countries').then((data
 			})
 
 		})
-		L.marker([country.latitude, country.longitude], { icon: lite }).addTo(map).bindPopup(popupText);
-	})
+		var popup = L.marker([country.latitude, country.longitude], { icon: lite }).addTo(map).bindPopup(popupText);
+		popup.addEventListener('popupclose', resetCenter);
 
+		// closes pop ups on mouse-out
+		map.on({
+			mouseout: function() {
+				popup.closePopup();
+			}
+		})
+	})
+	loadOverLay();
+	
+	return true;
 })
 
 
-// attributes of map.
-// map.dragging.disable();
-map.touchZoom.disable();
-map.doubleClickZoom.disable();
-map.scrollWheelZoom.disable();
-map.boxZoom.disable();
-map.keyboard.disable();
-if (map.tap) map.tap.disable();
+function resetCenter() {
+	console.log("pop up was closed.");
+	map.panTo([30, -10]);
+}
 
+function mapFocus(){
+	document.getElementById("overlayText").style.display = "none";
+}
 
+function resetMap(){
+	document.getElementById("overlayText").style.display = "block";	
+}
 
+function mapResize() {
+	// set the zoom level to 10
+	// map.setZoom((1/width ));  
+}
 
-//green icon
-// var greenMarkerGoodTooltips = L.marker([51.475, -0.075], { icon: greenIcon }).addTo(map);
-// greenMarkerGoodTooltips.bindTooltip("left", { direction: "left" }).openTooltip();
-// greenMarkerGoodTooltips.bindTooltip("right", { direction: "right" }).openTooltip();
-// greenMarkerGoodTooltips.bindTooltip("top", { direction: "top" }).openTooltip();
-// greenMarkerGoodTooltips.bindTooltip("bottom", { direction: "bottom" }).openTooltip();
+// Function to mock up loading
 
-
-
-//this is a marker
-
-
-
-	// L.marker([-40.9006, 174.8860]).addTo(map).bindPopup("I am a popup.").openPopup();
-
-
-
-
-//aonther marker
-// var marker = new L.marker([39.5, -77.3], { opacity: 0.01 }); //opacity may be set to zero
-// marker.bindTooltip("<b>My HTML is here!!!!</b>", { permanent: true, className: "my-label", offset: [0, 0] });
-// marker.addTo(map);
-
-
+function loadOverLay() {
+	document.getElementById('maptext').innerHTML = `Innovative technologies have
+	given rise to new ways to
+	manage migration. These
+	technologies are often
+	deployed for purposes of
+	efficiency, surveillance and
+	tracking.<br/><br/>
+	This tool tracks the
+	development and deployment
+	of technology in the migration
+	sector to manage the flow of
+	people across borders. The
+	tool aims to capture key
+	players, potential violations
+	and leaders in the industry.`;
+	document.getElementById('maptitle').innerHTML = ` Migration Tech Tracker`;
+	document.getElementById('titleLine').style.display = "block";
+}
+  
