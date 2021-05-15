@@ -3,18 +3,15 @@ var lite;
 var collection = [];
 
 document.getElementById("overlayText").style.display = "none";
-
-// window.addEventListener('resize', mapResize);
 var width = document.documentElement.clientWidth;
 
 window.onload = async () => {
-	
-	let done = await f;
+	var done = await f;
 
-	//put all info to load here:
-	if(done) {
-		console.log("The document is done.")
+	// Once all data is retrieved
+	if (done) {
 		document.getElementById("overlayText").style.display = "block";
+		document.getElementById('loader').style.display = "none";
 	}
 }
 
@@ -33,14 +30,7 @@ const f = fetch('https://migrationtechtracker-api.herokuapp.com/api/countries').
 		],
 		zoomControl: false,
 		center: [30, 20],
-		zoom: ((width/100) * 0.10), 	// calculate zoom based on user's page
-		// minZoom: 1.25,
-		// maxBounds: [
-		// 	//sw
-		// 	[60.712, 94.227],
-		// 	[60.774, -94.125]
-		// ],
-
+		zoom: ((width/100) * 0.10), 	// calculate zoom based on user's page width
 	});
 
 
@@ -54,15 +44,10 @@ const f = fetch('https://migrationtechtracker-api.herokuapp.com/api/countries').
 	if (map.tap) map.tap.disable();
 
 	lite = L.icon({
-		iconUrl: '../lite.png',
+		iconUrl: 'public/lite.png',
 		iconSize: [30, 30], // size of the icon
 		tooltipAnchor: [0, 0] // points the the tip of the leaf
 	});
-
-
-
-	collection = data;
-
 
 	// for each country
 	data.forEach((country) => {
@@ -72,9 +57,6 @@ const f = fetch('https://migrationtechtracker-api.herokuapp.com/api/countries').
 
 		// for each usecase
 		country.usecase.forEach((usecase) => {
-
-
-
 			if (usecase.organization) {
 				popupText += `<hr/><div id="organization"><b>${usecase.title}</b></div>`
 			}
@@ -107,8 +89,11 @@ const f = fetch('https://migrationtechtracker-api.herokuapp.com/api/countries').
 			}
 		})
 	})
+	loadOverLay();
+	
 	return true;
 })
+
 
 function resetCenter() {
 	console.log("pop up was closed.");
@@ -127,3 +112,26 @@ function mapResize() {
 	// set the zoom level to 10
 	// map.setZoom((1/width ));  
 }
+
+// Function to mock up loading
+
+function loadOverLay() {
+	document.getElementById('maptext').innerHTML = `Innovative technologies have
+	given rise to new ways to
+	manage migration. These
+	technologies are often
+	deployed for purposes of
+	efficiency, surveillance and
+	tracking.<br/><br/>
+	This tool tracks the
+	development and deployment
+	of technology in the migration
+	sector to manage the flow of
+	people across borders. The
+	tool aims to capture key
+	players, potential violations
+	and leaders in the industry.`;
+	document.getElementById('maptitle').innerHTML = ` Migration Tech Tracker`;
+	document.getElementById('titleLine').style.display = "block";
+}
+  

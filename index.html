@@ -1,50 +1,142 @@
 <!DOCTYPE html>
 <html>
+  <head>
+    <title>MigrationTechTracker</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      type="text/css"
+      rel="stylesheet"
+      href="https://unpkg.com/leaflet/dist/leaflet.css"
+    />
+    <link type="text/css" rel="stylesheet" href="style.css" />
+  </head>
 
-<head>
-  <title>Leaflet</title>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <link type="text/css" rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
-  <link type="text/css" rel="stylesheet" href="style.css" />
-</head>
+  <body>
+    <h1>Ryerson</h1>
+    <p></p>
+    <hr />
 
-<body>
-  <h1> Ryerson</h1>
-  <hr />
+    <p>
+      Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam vel eros
+      eu justo fringilla faucibus. Fusce lectus velit, sagittis in tellus nec,
+      pulvinar mollis tellus. Etiam turpis mi, posuere pretium suscipit sit
+      amet, rutrum ac est. Cras consectetur velit in nisl commodo vestibulum.
+      Aliquam eu pretium tellus. Integer lobortis sagittis lorem suscipit
+      tincidunt. Donec tincidunt non nulla sit amet commodo. Curabitur sodales
+      iaculis urna, sit amet venenatis diam placerat at. Donec a tincidunt
+      felis, sed hendrerit sem.
+    </p>
+    <p>
+      Donec molestie, purus eu semper tincidunt, quam libero euismod magna, sit
+      amet tempus dui dui non nisl. Etiam et efficitur velit. Vivamus vulputate
+      lectus non vulputate malesuada. Proin ut mattis lorem. Aliquam erat
+      volutpat. Praesent sed turpis interdum, malesuada augue sit amet, suscipit
+      ipsum. Nunc varius augue sed nisi venenatis accumsan. Aliquam id aliquet
+      sapien. Sed efficitur dignissim enim quis tempus.
+    </p>
 
-  <p>This is lucia's work</p>
+    <p>
+      Integer eu feugiat lectus. Nam nec malesuada urna, vel lobortis augue.
+      Quisque ac diam magna. Proin nec lacinia tellus, sed efficitur magna.
+      Proin orci risus, tincidunt nec diam id, dapibus cursus turpis. Aenean
+      posuere hendrerit quam, eget vulputate neque gravida in. Interdum et
+      malesuada fames ac ante ipsum primis in faucibus. Mauris pharetra
+      condimentum sem in vestibulum. Fusce vel erat cursus nulla iaculis pretium
+      sit amet vel enim. Phasellus quis velit ut mi condimentum dignissim non
+      sed ligula. In non bibendum neque, quis lacinia massa. Donec in dapibus
+      ipsum. Pellentesque massa quam, pellentesque non libero in, auctor rutrum
+      dui.
+    </p>
 
-  <script>
-      //script to print out one letter at a time.
-  </script>
-  <h1>Hello</h1>
-  <div id="leaflet" onmouseover="mapFocus()" onmouseout="resetMap()" style="width: 100%; height: 65vh;">
-    <div id="overlayText" class="leaflet-control leaflet-bottom leaflet-left col-sm-2 col-sm-offset-1">
-      <h2 id="maptitle">
-        Migration Tech Tracker</h2>
-        <hr id="titleLine" size="4" width="90%" color="#89b7df">
-    
-      <p id="maptext">Innovative technologies have
-        given rise to new ways to
-        manage migration. These
-        technologies are often
-        deployed for purposes of
-        efficiency, surveillance and
-        tracking.<br/><br/>
-        This tool tracks the
-        development and deployment
-        of technology in the migration
-        sector to manage the flow of
-        people across borders. The
-        tool aims to capture key
-        players, potential violations
-        and leaders in the industry.</p>
+    <p>
+      Cras sit amet dolor eget turpis tincidunt condimentum at non ex. Sed non
+      porttitor justo. Class aptent taciti sociosqu ad litora torquent per
+      conubia nostra, per inceptos himenaeos. Morbi tincidunt erat non feugiat
+      volutpat. Aenean vitae dignissim felis. Pellentesque mauris lectus,
+      fermentum eget vulputate a, pharetra et purus. Cras a placerat enim. Donec
+      convallis vitae felis sit amet interdum. Vivamus tincidunt lectus a neque
+      euismod tincidunt. Fusce vel dictum mi. Ut blandit justo eu metus
+      hendrerit, eget pulvinar ipsum posuere. Quisque a turpis nec mauris
+      fermentum fringilla. Donec porta, turpis ut luctus fringilla, risus leo
+      porttitor mi, sit amet fermentum neque leo sed quam.
+    </p>
+
+    <p>
+      Pellentesque habitant morbi tristique senectus et netus et malesuada fames
+      ac turpis egestas. Quisque id lorem turpis. Morbi id lorem sed metus
+      luctus pellentesque. Fusce tincidunt, turpis non commodo pharetra, nisl
+      quam tempus orci, elementum semper enim libero nec lorem. Pellentesque
+      eget velit id magna ultrices euismod. Proin condimentum ornare elit, non
+      vulputate urna. Quisque erat enim, sollicitudin non massa id, facilisis
+      hendrerit nulla. Aenean volutpat semper ipsum ut porta. Quisque blandit
+      consectetur metus, quis aliquam lorem rutrum sit amet. Etiam volutpat
+      aliquet iaculis. Cras in gravida risus, sit amet fermentum odio.
+      Pellentesque interdum rutrum massa, id vestibulum dui porta sed. Curabitur
+      suscipit odio non dapibus facilisis. Quisque sed diam suscipit, blandit
+      nunc in, ultricies nibh. Cras efficitur ultricies placerat. Praesent
+      posuere, velit vitae euismod mattis, leo nisi luctus turpis, et
+      scelerisque ante sem ac orci. Nam laoreet sed risus quis imperdiet.
+      Phasellus non diam euismod, tincidunt lacus sed, volutpat erat.
+      Suspendisse potenti. Nam ultrices elementum venenatis. Ut semper elit sit
+      amet leo fringilla, eu dignissim eros egestas. Nullam venenatis, elit quis
+      ullamcorper tincidunt, ligula urna venenatis quam, et vehicula felis arcu
+      nec elit. Ut magna nulla, efficitur sit amet fermentum ut, vulputate
+      imperdiet mi. Donec venenatis pretium hendrerit. Pellentesque consequat
+      commodo lacinia.
+    </p>
+
+    <!-- LeafLet Map -->
+    <div
+      id="leaflet"
+      onmouseover="mapFocus()"
+      onmouseout="resetMap()"
+      style="width: 100%; height: 65vh"
+    >
+      <div id="loader" class="boxLoading"></div>
+      <div
+        id="overlayText"
+        class="
+          leaflet-control leaflet-bottom leaflet-left
+          col-sm-2 col-sm-offset-1
+        "
+      >
+        <h2 id="maptitle"></h2>
+        <hr
+          id="titleLine"
+          size="4"
+          width="90%"
+          color="#89b7df"
+          style="display: none"
+        />
+
+        <p id="maptext"></p>
+      </div>
     </div>
-  </div>
 
-  <script src="https://unpkg.com/leaflet/dist/leaflet-src.js"></script>
-  <script src="script.js"></script>
-</body>
+    <p>
+      Donec molestie, purus eu semper tincidunt, quam libero euismod magna, sit
+      amet tempus dui dui non nisl. Etiam et efficitur velit. Vivamus vulputate
+      lectus non vulputate malesuada. Proin ut mattis lorem. Aliquam erat
+      volutpat. Praesent sed turpis interdum, malesuada augue sit amet, suscipit
+      ipsum. Nunc varius augue sed nisi venenatis accumsan. Aliquam id aliquet
+      sapien. Sed efficitur dignissim enim quis tempus.
+    </p>
 
+    <p>
+      Integer eu feugiat lectus. Nam nec malesuada urna, vel lobortis augue.
+      Quisque ac diam magna. Proin nec lacinia tellus, sed efficitur magna.
+      Proin orci risus, tincidunt nec diam id, dapibus cursus turpis. Aenean
+      posuere hendrerit quam, eget vulputate neque gravida in. Interdum et
+      malesuada fames ac ante ipsum primis in faucibus. Mauris pharetra
+      condimentum sem in vestibulum. Fusce vel erat cursus nulla iaculis pretium
+      sit amet vel enim. Phasellus quis velit ut mi condimentum dignissim non
+      sed ligula. In non bibendum neque, quis lacinia massa. Donec in dapibus
+      ipsum. Pellentesque massa quam, pellentesque non libero in, auctor rutrum
+      dui.
+    </p>
+
+    <script src="https://unpkg.com/leaflet/dist/leaflet-src.js"></script>
+    <script src="script.js"></script>
+  </body>
 </html>
