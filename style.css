@@ -44,15 +44,15 @@ body {
   font-family: monospace;
   color: #89b7df;
 
-  text-shadow: 2px 2px #000000;
+/*   text-shadow: 2px 2px #000000; */
   font-size: 1.35vw;
 }
 
 #maptext {
   color: #89b7df;
   font-size: 0.7vw;
-  text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000,
-    1px 1px 0 #000;
+/*   text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, */
+/*     1px 1px 0 #000; */
 }
 
 h2 {
