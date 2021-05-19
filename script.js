@@ -15,24 +15,24 @@ window.onload = async () => {
 	}
 }
 
-
 // connects to API to fetch data.
 const f = fetch('https://migrationtechtracker-api.herokuapp.com/api/countries').then((data) => {
 	collection = data.json();
 	return collection;
 }).then((data) => {
 	// load back as backdrop
-	map = new L.Map('leaflet', {
-		layers: [
-			new L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
-				'attribution': 'Map data © <a href="http://openstreetmap.org">OpenStreetMap</a> contributors'
-			})
-		],
-		zoomControl: false,
-		center: [30, 20],
-		zoom: ((width/100) * 0.10), 	// calculate zoom based on user's page width
-	});
+	map = new L.map('leaflet').fitWorld();
 
+	L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
+		'attribution': 'Map data © <a href="http://openstreetmap.org">OpenStreetMap</a> contributors',
+		zoomControl: false,
+		zoom: ((width/100) * 0.10), 	// calculate zoom based on user's page width
+		maxZoom: 5,
+		minZoom: 1.5,
+
+	}).addTo(map);
+	
+	map.panTo([30, -10]);
 
 	// attributes of map.
 	map.dragging.disable();
@@ -58,10 +58,10 @@ const f = fetch('https://migrationtechtracker-api.herokuapp.com/api/countries').
 		// for each usecase
 		country.usecase.forEach((usecase) => {
 			if (usecase.organization) {
-				popupText += `<hr/><div id="organization"><b>${usecase.title}</b></div>`
+				popupText += `<hr color="black" size='4'/><div id="organization"><b>${usecase.title}</b></div>`
 			}
 			else {
-				popupText += `<hr/>
+				popupText += `<hr color="black" size="4"/>
 			<div id="title"><b>${usecase.title}</b> </div>`;
 			}
 			popupText += `
@@ -77,10 +77,13 @@ const f = fetch('https://migrationtechtracker-api.herokuapp.com/api/countries').
 					popupText += `${source.title}`
 				}
 			})
+			popupText += `<br/>`
 
 		})
 		var popup = L.marker([country.latitude, country.longitude], { icon: lite }).addTo(map).bindPopup(popupText);
 		popup.addEventListener('popupclose', resetCenter);
+
+
 
 		// closes pop ups on mouse-out
 		map.on({
@@ -88,7 +91,18 @@ const f = fetch('https://migrationtechtracker-api.herokuapp.com/api/countries').
 				popup.closePopup();
 			}
 		})
+
+
+
+
+
 	})
+
+	
+
+
+	
+	
 	loadOverLay();
 	
 	return true;

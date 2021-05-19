@@ -87,30 +87,37 @@
     </p>
 
     <!-- LeafLet Map -->
-    <div
-      id="leaflet"
-      onmouseover="mapFocus()"
-      onmouseout="resetMap()"
-      style="width: 100%; height: 65vh"
-    >
-      <div id="loader" class="boxLoading"></div>
-      <div
-        id="overlayText"
-        class="
-          leaflet-control leaflet-bottom leaflet-left
-          col-sm-2 col-sm-offset-1
-        "
-      >
-        <h2 id="maptitle"></h2>
-        <hr
-          id="titleLine"
-          size="4"
-          width="90%"
-          color="#89b7df"
-          style="display: none"
-        />
 
-        <p id="maptext"></p>
+    <div class="container">
+      <div class="map-container">
+        <div class="map-frame">
+          <div id="loader" class="boxLoading"></div>
+          <div id="info-legend" style="background-color: red"></div>
+
+          <div
+            id="overlayText"
+            class="
+              leaflet-control leaflet-bottom leaflet-left
+              col-sm-2 col-sm-offset-1
+            "
+          >
+            <h2 id="maptitle"></h2>
+            <hr
+              id="titleLine"
+              size="4"
+              width="90%"
+              color="#afcee9"
+              style="display: none"
+            />
+
+            <p id="maptext"></p>
+          </div>
+          <div
+            id="leaflet"
+            onmouseover="mapFocus()"
+            onmouseout="resetMap()"
+          ></div>
+        </div>
       </div>
     </div>
 
