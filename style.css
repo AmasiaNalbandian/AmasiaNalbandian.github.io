@@ -1,21 +1,15 @@
 body {
-  margin: 0;
-  margin: 0 20%;
-  margin-bottom: 20%;
+  /* margin: 0; */
+  /* margin: 0 20%; */
+  /* margin-bottom: 20%; */
+  font-family: inherit;
 }
 
 /* Use following for the map. */
 #leaflet {
   border: black 3px solid;
-  background-color: #262626;
+  background-color: #d0cfd3;
   text-align: left;
-
-}
-
-#titleLine {
-  left: 50%;
-  margin: 0;
-  box-shadow: 2px 2px #000000;
 }
 
 #organization {
@@ -31,51 +25,9 @@ body {
   font-weight: bold;
 }
 
-#info {
-  margin-top: 3px;
-}
-
-#legend {
-  background-color: #262626;
-}
-
-#maptitle {
-  width: 85%;
-  font-family: sans-serif;
-  color: #afcee9;
-
-/*   text-shadow: 2px 2px #000000; */
-  font-size: 1.35vw;
-}
-
-#maptext {
-  font-family: sans-serif;
-  color: #afcee9;
-  font-size: 0.7vw;
-/*   text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, */
-/*     1px 1px 0 #000; */
-}
-
-h2 {
-  margin: 0;
-}
-
-.leaflet-control {
-  width: 20%;
-  margin-left: 1rem;
-  padding: 2%;
-  border-radius: 5%;
-}
-
-
-.leaflet-container .leaflet-control-attribution,
-.leaflet-container .leaflet-control-scale {
-  width: 0px;
-}
-
 .boxLoading {
   border: 16px solid #837d7d;
-  border-top: 16px solid #3498db; 
+  border-top: 16px solid #3498db;
   border-radius: 50%;
   width: 120px;
   height: 120px;
@@ -88,8 +40,12 @@ h2 {
 }
 
 @keyframes spin {
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
 }
 
 .leaflet-popup-content {
