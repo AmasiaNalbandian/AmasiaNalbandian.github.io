@@ -11,6 +11,61 @@
     />
     <link type="text/css" rel="stylesheet" href="style.css" />
   </head>
+  <style>
+    body {
+      margin: 0 20%;
+      font-family: inherit;
+    }
+
+    /* Use following for the map. */
+    #leaflet {
+      border: black 3px solid;
+      background-color: #d0cfd3;
+      text-align: left;
+    }
+
+    #organization {
+      color: #1a8061;
+    }
+
+    #title {
+      color: #5e93d1;
+    }
+
+    #subtitle {
+      color: #262626;
+      font-weight: bold;
+    }
+
+    .boxLoading {
+      border: 16px solid #837d7d;
+      border-top: 16px solid #3498db;
+      border-radius: 50%;
+      width: 120px;
+      height: 120px;
+      animation: spin 1s linear infinite;
+
+      display: block;
+      margin-left: auto;
+      margin-right: auto;
+      margin-top: 10vh;
+    }
+
+    @keyframes spin {
+      0% {
+        transform: rotate(0deg);
+      }
+      100% {
+        transform: rotate(360deg);
+      }
+    }
+
+    .leaflet-popup-content {
+      max-width: 45vw;
+      height: 25vh;
+      overflow-y: auto;
+    }
+  </style>
 
   <body>
     <h1>Ryerson</h1>
@@ -35,6 +90,8 @@
         // Once all data is retrieved
         if (done) {
           document.getElementById("loader").style.display = "none";
+          // Alt attribute for the map
+          document.getElementById('leaflet').setAttribute('alt', 'Interactive Migration Tech Tracker Map')
         }
       };
 
@@ -50,20 +107,6 @@
           // load map as backdrop
           map = new L.Map("leaflet", {
             layers: [
-              // Find layers here for the map: https://leaflet-extras.github.io/leaflet-providers/preview/
-              // new L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
-              // 	'attribution': 'Map data © <a href="http://openstreetmap.org">OpenStreetMap</a> contributors'
-              // })
-              // new L.tileLayer('https://{s}.basemaps.cartocdn.com/light_nolabels/{z}/{x}/{y}{r}.png', {
-              // 	'attribution': 'Map data © <a href="http://openstreetmap.org">OpenStreetMap</a> contributors'
-              // })
-              // new L.tileLayer(
-              //   "https://server.arcgisonline.com/ArcGIS/rest/services/World_Street_Map/MapServer/tile/{z}/{y}/{x}",
-              //   {
-              //     attribution:
-              //       "Tiles &copy; Esri &mdash; Source: Esri, DeLorme, NAVTEQ, USGS, Intermap, iPC, NRCAN, Esri Japan, METI, Esri China (Hong Kong), Esri (Thailand), TomTom, 2012",
-              //   }
-              // ),
               new L.tileLayer(
                 "https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Light_Gray_Base/MapServer/tile/{z}/{y}/{x}",
                 {
@@ -84,6 +127,7 @@
           map.scrollWheelZoom.disable();
           // map.boxZoom.disable();
           map.keyboard.disable();
+
           if (map.tap) map.tap.disable();
 
           // Variable holding every polygon(country outline) with their hover state
