@@ -27,11 +27,11 @@
       color: #1a8061;
     }
 
-    #title {
+    .title {
       color: #5e93d1;
     }
 
-    #subtitle {
+    .subtitle {
       color: #262626;
       font-weight: bold;
     }
@@ -140,12 +140,16 @@
                 popupText += `<hr/><div id="organization"><b>${usecase.title}</b></div>`;
               } else {
                 popupText += `<hr/>
-			<div id="title"><b>${usecase.title}</b> </div>`;
+			<div class="title"><b>${usecase.title}</b> </div>`;
               }
               popupText += `
-			<div id="info"><div id="subtitle">Department</div> ${usecase.department}</div>
-			<div id="info"><div id="subtitle">Details</div> ${usecase.details}<br/></div>
-			<div id="info"><div id="subtitle">Sources</div></div>`;
+			<div id="info"><div class="subtitle">Brief Description</div> ${usecase.details}</div>
+			<div id="info"><div class="subtitle">Actor Deploying Technology</div> ${usecase.actorDeployingTechnology}</div>
+			<div id="info"><div class="subtitle">Technology Provider</div> ${usecase.technologyProvider}</div>
+			<div id="info"><div class="subtitle">Migrant Group Targeted</div> ${usecase.migrantGroupTargeted}</div>
+			<div id="info"><div class="subtitle">Actor Deploying Technology</div> ${usecase.actorDeployingTechnology}</div>
+			<div id="info"><div class="subtitle">Purpose of Technology</div> ${usecase.purposeOfTechnology}</div>
+			<div id="info"><div class="subtitle">Sources</div></div>`;
 
               usecase.source.forEach((source) => {
                 if (source.link) {
