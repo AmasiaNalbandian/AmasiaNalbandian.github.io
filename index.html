@@ -107,6 +107,9 @@
                 {
                   attribution:
                     "Tiles &copy; Esri &mdash; Esri, DeLorme, NAVTEQ",
+		    noWrap: true,
+                    continuousWorld: false,
+                    bounds: [[-90, -180], [90, 180]],
                 }
               ),
             ],
@@ -151,7 +154,7 @@
 
               usecase.source.forEach((source) => {
                 if (source.link) {
-                  popupText += `<a href=${source.link}>${source.title}</a><br/>`;
+                  popupText += `<a href=${source.link} target="_blank">${source.title}</a><br/>`;
                 } else {
                   popupText += `${source.title}`;
                 }
