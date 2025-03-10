@@ -1,198 +1,211 @@
 <!DOCTYPE html>
 <html>
-  <head>
+<head>
     <title>MigrationTechTracker</title>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link
-      type="text/css"
-      rel="stylesheet"
-      href="https://unpkg.com/leaflet/dist/leaflet.css"
+            type="text/css"
+            rel="stylesheet"
+            href="https://unpkg.com/leaflet/dist/leaflet.css"
     />
-  </head>
-  <style>
+</head>
+<style>
     body {
-      font-family: inherit;
+        font-family: inherit;
     }
 
     /* Use following for the map. */
     #leaflet {
-      border: black 3px solid;
-      background-color: #d0cfd3;
-      text-align: left;
+        border: black 3px solid;
+        background-color: #d0cfd3;
+        text-align: left;
     }
 
     #organization {
-      color: #1a8061;
+        color: #1a8061;
     }
 
     .title {
-      color: #5e93d1;
+        color: #5e93d1;
     }
 
     .subtitle {
-      color: #262626;
-      font-weight: bold;
+        color: #262626;
+        font-weight: bold;
     }
 
     .boxLoading {
-      border: 16px solid #837d7d;
-      border-top: 16px solid #3498db;
-      border-radius: 50%;
-      width: 120px;
-      height: 120px;
-      animation: spin 1s linear infinite;
+        border: 16px solid #837d7d;
+        border-top: 16px solid #3498db;
+        border-radius: 50%;
+        width: 120px;
+        height: 120px;
+        animation: spin 1s linear infinite;
 
-      display: block;
-      margin-left: auto;
-      margin-right: auto;
-      margin-top: 10vh;
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+        margin-top: 10vh;
     }
 
     @keyframes spin {
-      0% {
-        transform: rotate(0deg);
-      }
-      100% {
-        transform: rotate(360deg);
-      }
+        0% {
+            transform: rotate(0deg);
+        }
+        100% {
+            transform: rotate(360deg);
+        }
     }
 
     .leaflet-popup-content {
-      max-width: 45vw;
-      height: 25vh;
-      overflow-y: auto;
+        max-width: 45vw;
+        height: 25vh;
+        overflow-y: auto;
     }
-  </style>
+</style>
 
-  <body>
+<body>
 
-    <!-- LeafLet Map -->
-    <div id="leaflet" style="width: 100%; height: 600px">
-      <div id="loader" class="boxLoading"></div>
-    </div>
+<!-- LeafLet Map -->
+<div id="leaflet" style="width: 100%; height: 600px">
+    <div id="loader" class="boxLoading"></div>
+</div>
 
-    <script src="https://unpkg.com/leaflet/dist/leaflet-src.js"></script>
-    <script>
-      var map;
-      var collection = [];
+<script src="https://unpkg.com/leaflet/dist/leaflet-src.js"></script>
+<script>
+    var map;
+    var collection = [];
 
-      var width = document.documentElement.clientWidth;
+    var width = document.documentElement.clientWidth;
 
-      window.onload = async () => {
+    window.onload = async () => {
         var done = await f;
 
         // Once all data is retrieved
         if (done) {
-          document.getElementById("loader").style.display = "none";
-          // Alt attribute for the map
-          document.getElementById('leaflet').setAttribute('alt', 'Interactive Migration Tech Tracker Map')
+            document.getElementById("loader").style.display = "none";
+            // Alt attribute for the map
+            document.getElementById('leaflet').setAttribute('alt', 'Interactive Migration Tech Tracker Map')
         }
-      };
+    };
 
-      // connects to API to fetch data.
-      const f = fetch(
-        "https://migrationtechtracker-api.herokuapp.com/api/countries"
-      )
+    // connects to API to fetch data.
+    const f = fetch(
+        'https://mttapi-ddc00e3ddc59.herokuapp.com/api/countries'
+    )
         .then((data) => {
-          collection = data.json();
-          return collection;
+            collection = data.json();
+            return collection;
         })
         .then((data) => {
-          // load map as backdrop
-          map = new L.Map("leaflet", {
-            layers: [
-              new L.tileLayer(
-                "https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Light_Gray_Base/MapServer/tile/{z}/{y}/{x}",
-                {
-                  attribution:
-                    "Tiles &copy; Esri &mdash; Esri, DeLorme, NAVTEQ",
-		    noWrap: true,
-                    continuousWorld: false,
-                    bounds: [[-90, -180], [90, 180]],
+            // load map as backdrop
+            map = new L.Map("leaflet", {
+                layers: [
+                    new L.tileLayer(
+                        "https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Light_Gray_Base/MapServer/tile/{z}/{y}/{x}",
+                        {
+                            attribution:
+                                "Tiles &copy; Esri &mdash; Esri, DeLorme, NAVTEQ",
+                            noWrap: true,
+                            continuousWorld: false,
+                            bounds: [[-90, -180], [90, 180]],
+                        }
+                    ),
+                ],
+                zoomControl: true,
+                center: [30, 20],
+                zoom: (width / 100) * 0.15, // calculate zoom based on user's page width
+            });
+
+            // attributes of map.
+            // map.dragging.disable();
+            map.touchZoom.disable();
+            map.doubleClickZoom.disable();
+            map.scrollWheelZoom.disable();
+            // map.boxZoom.disable();
+            map.keyboard.disable();
+
+            if (map.tap) map.tap.disable();
+
+            // Variable holding every polygon(country outline) with their hover state
+            var gjsonMarker = [];
+
+            // for each country in the database create the popup and polygon
+            data.forEach((country) => {
+
+                if (!country.feature) {
+                    return;
                 }
-              ),
-            ],
-            zoomControl: true,
-            center: [30, 20],
-            zoom: (width / 100) * 0.15, // calculate zoom based on user's page width
-          });
 
-          // attributes of map.
-          // map.dragging.disable();
-          map.touchZoom.disable();
-          map.doubleClickZoom.disable();
-          map.scrollWheelZoom.disable();
-          // map.boxZoom.disable();
-          map.keyboard.disable();
+                if (!country.usecase || country.usecase.length === 0) {
+                    return;
+                }
 
-          if (map.tap) map.tap.disable();
-
-          // Variable holding every polygon(country outline) with their hover state
-          var gjsonMarker = [];
-
-          // for each country in the database create the popup and polygon
-          data.forEach((country) => {
-            let popupText = `
+                let popupText = `
 		  <h3>${country.country}</h3>`;
 
-            // for each usecase
-            country.usecase.forEach((usecase) => {
-              if (usecase.organization) {
-                popupText += `<hr/><div id="organization"><b>${usecase.title}</b></div>`;
-              } else {
-                popupText += `<hr/>
-			<div class="title"><b>${usecase.title}</b> </div>`;
-              }
-              popupText += `
+                // for each usecase
+                country.usecase.forEach((usecase, idx) => {
+                    if (usecase.organization) {
+                        popupText += `<hr/><div id="organization"><b>${usecase.title}</b></div>`;
+                    } else {
+                        popupText += `<hr/>
+			<div class="title"><b>${idx+1}. ${usecase.title}</b> </div>`;
+                    }
+                    popupText += `
 			<div id="info"><div class="subtitle">Brief Description</div> ${usecase.details}</div>
 			<div id="info"><div class="subtitle">Actor Deploying Technology</div> ${usecase.actorDeployingTechnology}</div>
+			<div id="info"><div class="subtitle">Technology Type</div> ${usecase.technologyType ?? "N/A"}</div>
 			<div id="info"><div class="subtitle">Technology Provider</div> ${usecase.technologyProvider}</div>
+			<div id="info"><div class="subtitle">Deployment Year</div> ${usecase.deploymentYear ?? "N/A"}</div>
 			<div id="info"><div class="subtitle">Migrant Group Targeted</div> ${usecase.migrantGroupTargeted}</div>
 			<div id="info"><div class="subtitle">Purpose of Technology</div> ${usecase.purposeOfTechnology}</div>
 			<div id="info"><div class="subtitle">Sources</div></div>`;
 
-              usecase.source.forEach((source) => {
-                if (source.link) {
-                  popupText += `<a href=${source.link} target="_blank">${source.title}</a><br/>`;
-                } else {
-                  popupText += `${source.title}`;
-                }
-              });
+                    usecase.source.forEach((source) => {
+                        if (source.link) {
+                            popupText += `<a href=${source.link} target="_blank">${source.title}</a><br/>`;
+                        } else {
+                            popupText += `${source.title}`;
+                        }
+                    });
+                });
+
+                let feature = JSON.parse(country.feature);
+                feature.properties.popupContent = popupText;
+                gjsonMarker.push(feature);
+
+
             });
 
-            let feature = JSON.parse(country.feature);
-            feature.properties.popupContent = popupText;
-            gjsonMarker.push(feature);
-          });
+            // function to add each geojson to the map with its own event
+            gpsMarker = new L.geoJson(gjsonMarker, {
+                onEachFeature: function (feature, layer) {
+                    if (feature.properties && feature.properties.popupContent) {
+                        layer.bindPopup(feature.properties.popupContent, {
+                            closeButton: false,
+                            offset: L.point(0, -20),
+                        });
+                        layer.on("onclick", function () {
+                            layer.openPopup();
+                        });
+                        layer.on("mouseover", function () {
+                            layer.setStyle({ color: "#ffa300", weight: 2, opacity: 1 });
+                        });
+                        layer.on("mouseout", function () {
+                            layer.setStyle({ color: "#3388FF", weight: 2, opacity: 1 });
+                        });
+                    }
+                },
+                pointToLayer: function (feature, latlng) {
+                    return L.circleMarker(latlng);
+                },
+            });
 
-          // function to add each geojson to the map with its own event
-          gpsMarker = new L.geoJson(gjsonMarker, {
-            onEachFeature: function (feature, layer) {
-              if (feature.properties && feature.properties.popupContent) {
-                layer.bindPopup(feature.properties.popupContent, {
-                  closeButton: false,
-                  offset: L.point(0, -20),
-                });
-                layer.on("onclick", function () {
-                  layer.openPopup();
-                });
-                layer.on("mouseover", function () {
-                  layer.setStyle({ color: "#ffa300", weight: 2, opacity: 1 });
-                });
-                layer.on("mouseout", function () {
-                  layer.setStyle({ color: "#3388FF", weight: 2, opacity: 1 });
-                });
-              }
-            },
-            pointToLayer: function (feature, latlng) {
-              return L.circleMarker(latlng);
-            },
-          });
-
-          map.addLayer(gpsMarker);
-          return true;
+            map.addLayer(gpsMarker);
+            return true;
         });
-    </script>
-  </body>
+</script>
+</body>
 </html>
